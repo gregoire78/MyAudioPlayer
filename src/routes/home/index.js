@@ -14,7 +14,7 @@ import Layout from '../../components/Layout';
 async function action({ fetch }) {
   const resp = await fetch('/graphql', {
     body: JSON.stringify({
-      query: '{audio,news{title,link,content}}',
+      query: '{audio{title,picture{data}}, news{title,link,content}}',
     }),
   });
   //const resp1 = await fetch('/api', { method: 'GET' });
@@ -29,7 +29,7 @@ async function action({ fetch }) {
     chunks: ['home'],
     component: (
       <Layout>
-        <Home news={data.news}/>
+        <Home news={data.news} audio={data.audio}/>
       </Layout>
     ),
   };

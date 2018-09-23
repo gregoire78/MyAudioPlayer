@@ -27,6 +27,8 @@ class Home extends React.Component {
         <div className={s.root}>
           <div className={s.container}>
             <h1>News</h1>
+            {this.props.audio.title}<br/>
+            <img src={"data:image/jpeg;base64,"+this.props.audio.picture[0].data}/>
             {this.props.news.map(item => (
               <article key={item.link} className={s.newsItem}>
                 <h1 className={s.newsTitle}>

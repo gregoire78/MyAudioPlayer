@@ -6,17 +6,17 @@ import {
     GraphQLNonNull as NonNull,
   } from 'graphql';
 
-  const disk = new ObjectType({name: 'disk', fields: { no: StringType, of: StringType }});
-  const track = new ObjectType({name: 'track', fields: { no: StringType, of: StringType }});
+  const disk = new ObjectType({name: 'disk', fields: { no: {type: StringType}, of: {type: StringType} }});
+  const track = new ObjectType({name: 'track', fields: { no: {type: StringType}, of: {type: StringType} }});
   const AudioItemType = new ObjectType({
     name: 'AudioItem',
     fields: {
-      track: {type : StringType},
-      disk: {type : StringType},
-      picture: { type: StringType},
+      track: {type : track},
+      disk: {type : disk},
+      picture: { type: new ListType(new ObjectType({name: 'picture', fields: {type: {type: StringType}, format: {type: StringType}, description: {type: StringType}, width: {type: IntType}, height: {type: IntType}, colour_depth: {type: IntType}, indexed_color: {type: IntType}, data: {type: StringType} }}))},
       album: { type: StringType },
+      artists: { type: new ListType(StringType) },
       artist: { type: StringType },
-      artists: { type: StringType },
       title: { type: StringType },
     },
   });
