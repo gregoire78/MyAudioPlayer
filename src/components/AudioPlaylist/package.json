@@ -1,0 +1,6 @@
+{
+  "name": "AudioPlaylist",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./AudioPlaylist.js"
+}
