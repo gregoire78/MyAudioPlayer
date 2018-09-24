@@ -1,45 +1,117 @@
-import { GraphQLString as StringType } from 'graphql';
-import AudioItemType from '../types/AudioItemType';
+import { GraphQLList as List } from 'graphql';
 import * as mm from 'music-metadata';
 import util from 'util';
 import path from 'path';
-let items;
-let lastFetchTask;
-let lastFetchTime = new Date(1970, 0, 1);
+import fs from 'fs';
+import AudioItemType from '../types/AudioItemType';
 
+let item = [];
+Array.prototype.clean = function(deleteValue) {
+  for (let i = 0; i < this.length; i++) {
+    if (this[i] == deleteValue) {
+      this.splice(i, 1);
+      i--;
+    }
+  }
+  return this;
+};
+function walk(dir) {
+  return new Promise((resolve, reject) => {
+    fs.readdir(dir, (error, files) => {
+      if (error) {
+        return reject(error);
+      }
+      Promise.all(
+        files.map(
+          file =>
+            new Promise((resolve, reject) => {
+              const filepath = path.join(dir, file);
+
+              fs.stat(filepath, (error, stats) => {
+                if (error) {
+                  return reject(error);
+                }
+                if (stats.isDirectory()) {
+                  walk(filepath).then(resolve);
+                } else if (stats.isFile()) {
+                  if (path.extname(filepath) == '.flac') {
+                    resolve(filepath);
+                  } else {
+                    resolve(null);
+                  }
+                }
+              });
+            }),
+        ),
+      ).then(foldersContents => {
+        resolve(
+          foldersContents.reduce(
+            (all, folderContents) => all.concat(folderContents).clean(null),
+            [],
+          ),
+        );
+      });
+    });
+  });
+}
 const audio = {
-  type: AudioItemType,
+  type: new List(AudioItemType),
   resolve() {
-
-    if (lastFetchTask) {
-      return lastFetchTask;
+    // const pathAudio = path.resolve(__dirname, '../public/01 Baba Yetu.flac');
+    const pathAudio = path.resolve('public/01 Baba Yetu.flac');
+    walk('public')
+      .then(resp =>
+        Promise.all(
+          resp.map(
+            audioFile =>
+              new Promise((resolve, reject) => {
+                mm.parseFile(audioFile, { native: true })
+                  .then(metadata => {
+                    if (__DEV__) {
+                      console.log(
+                        util.inspect(metadata.common, {
+                          showHidden: false,
+                          depth: null,
+                        }),
+                      );
+                      console.log(Math.random());
+                    }
+                    const itemso = metadata.common;
+                    itemso.picture[0].data = new Buffer(
+                      metadata.common.picture[0].data,
+                    ).toString('base64');
+                    resolve(itemso);
+                  })
+                  .catch(err => {
+                    if (__DEV__) {
+                      console.error(err.message);
+                    }
+                    throw err;
+                  });
+              }),
+          ),
+        ),
+      )
+      .then(itemss => (item = itemss));
+    // mm.parseFile(pathAudio, { native: true })
+    //  .then(metadata => {
+    //    if (__DEV__) {
+    //      //console.log(util.inspect(metadata.common, {showHidden: false,depth: null}));
+    //      ////  const base64data = new Buffer(metadata.common.picture[0].data).toString('base64');
+    //      //console.log(Math.random())
+    //    }
+    //    items = metadata.common;
+    //    items.picture[0].data = new Buffer(metadata.common.picture[0].data).toString('base64');
+    //    return items;
+    //  })
+    //  .catch(err => {
+    //    if (__DEV__) { console.error(err.message); }
+    //    throw err;
+    //  });
+    if (item.length) {
+      return item;
     }
-    if (new Date() - lastFetchTime > 1000 * 60 * 10 /* 10 mins */) {
-      const pathAudio = path.resolve(__dirname, '../public/01 Baba Yetu.flac');
-      lastFetchTime = new Date();
-      lastFetchTask = mm.parseFile(pathAudio, {native: true})
-        .then(metadata => {
-          console.log(util.inspect(metadata.common, {
-            showHidden: false,
-            depth: null
-          }));
-          //  const base64data = new Buffer(metadata.common.picture[0].data).toString('base64');
-          console.log(Math.random())
-
-          items = metadata.common;
-          items.picture[0].data = new Buffer(metadata.common.picture[0].data).toString('base64');
-          return items;
-        })
-        .catch(err => {
-          console.error(err.message);
-          throw err;
-        });
-        if (items.length) {
-          return items;
-        }
-        return lastFetchTask;
-    }
-    return items;
+    return item;
   },
 };
 

@@ -20,29 +20,44 @@ class Home extends React.Component {
         content: PropTypes.string,
       }),
     ).isRequired,
+    audio: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        picture: PropTypes.array.isRequired,
+      }),
+    ).isRequired,
   };
 
   render() {
     return (
-        <div className={s.root}>
-          <div className={s.container}>
-            <h1>News</h1>
-            {this.props.audio.title}<br/>
-            <img src={"data:image/jpeg;base64,"+this.props.audio.picture[0].data}/>
-            {this.props.news.map(item => (
-              <article key={item.link} className={s.newsItem}>
-                <h1 className={s.newsTitle}>
-                  <a href={item.link}>{item.title}</a>
-                </h1>
-                <div
-                  className={s.newsDesc}
-                  // eslint-disable-next-line react/no-danger
-                  dangerouslySetInnerHTML={{ __html: item.content }}
-                />
-              </article>
-            ))}
-          </div>
+      <div className={s.root}>
+        <div className={s.container}>
+          <h1>News</h1>
+
+          {this.props.audio.map(item => (
+            <div>
+              <p>{item.title}</p>
+              <img
+                src={`data:image/jpeg;base64,${item.picture[0].data}`}
+                alt="cover"
+              />
+            </div>
+          ))}
+
+          {this.props.news.map(item => (
+            <article key={item.link} className={s.newsItem}>
+              <h1 className={s.newsTitle}>
+                <a href={item.link}>{item.title}</a>
+              </h1>
+              <div
+                className={s.newsDesc}
+                // eslint-disable-next-line react/no-danger
+                dangerouslySetInnerHTML={{ __html: item.content }}
+              />
+            </article>
+          ))}
         </div>
+      </div>
     );
   }
 }
