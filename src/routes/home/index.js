@@ -14,22 +14,22 @@ import Layout from '../../components/Layout';
 async function action({ fetch }) {
   const resp = await fetch('/graphql', {
     body: JSON.stringify({
-      query: '{audio{title,picture{data}}, news{title,link,content}}',
+      query: '{audio{album,tracks{track{no},picture{data},artist,title}}}',
     }),
   });
-  //const resp1 = await fetch('/api', { method: 'GET' });
-  //const { common } = await resp1.json();
-  //console.log(common)
+  // const resp1 = await fetch('/api', { method: 'GET' });
+  // const { common } = await resp1.json();
+  // console.log(common)
 
   const { data } = await resp.json();
-  if (!data || !data.news) throw new Error('Failed to load the news feed.');
-  //if (!data1 || !data1.common) throw new Error('Failed to load the metadata feed.');
+  if (!data || !data.audio) throw new Error('Failed to load the audio feed.');
+  // if (!data1 || !data1.common) throw new Error('Failed to load the metadata feed.');
   return {
     title: 'React Starter Kit',
     chunks: ['home'],
     component: (
       <Layout>
-        <Home news={data.news} audio={data.audio}/>
+        <Home news={data.news} audio={data.audio} />
       </Layout>
     ),
   };

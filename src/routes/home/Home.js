@@ -22,12 +22,18 @@ class Home extends React.Component {
     ).isRequired,
     audio: PropTypes.arrayOf(
       PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        picture: PropTypes.array.isRequired,
+        album: PropTypes.string.isRequired,
+        tracks: PropTypes.array.isRequired,
       }),
     ).isRequired,
   };
-
+  pad(data, size) {
+    let s = String(data);
+    while (s.length < (size || 2)) {
+      s = `0${s}`;
+    }
+    return s;
+  }
   render() {
     return (
       <div className={s.root}>
@@ -36,15 +42,21 @@ class Home extends React.Component {
 
           {this.props.audio.map(item => (
             <div>
-              <p>{item.title}</p>
+              <h3>{item.album}</h3>
               <img
-                src={`data:image/jpeg;base64,${item.picture[0].data}`}
+                src={`data:image/jpeg;base64,${item.tracks[0].picture[0].data}`}
                 alt="cover"
               />
+              {item.tracks.map(track => (
+                <div>
+                  <p>
+                    {this.pad(track.track.no, 2)} - {track.title}
+                  </p>
+                </div>
+              ))}
             </div>
           ))}
-
-          {this.props.news.map(item => (
+          {/* this.props.news.map(item => (
             <article key={item.link} className={s.newsItem}>
               <h1 className={s.newsTitle}>
                 <a href={item.link}>{item.title}</a>
@@ -55,7 +67,7 @@ class Home extends React.Component {
                 dangerouslySetInnerHTML={{ __html: item.content }}
               />
             </article>
-          ))}
+          )) */}
         </div>
       </div>
     );

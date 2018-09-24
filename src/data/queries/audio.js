@@ -3,6 +3,7 @@ import * as mm from 'music-metadata';
 import util from 'util';
 import path from 'path';
 import fs from 'fs';
+import _ from 'lodash';
 import AudioItemType from '../types/AudioItemType';
 
 let item = [];
@@ -58,7 +59,7 @@ const audio = {
   type: new List(AudioItemType),
   resolve() {
     // const pathAudio = path.resolve(__dirname, '../public/01 Baba Yetu.flac');
-    const pathAudio = path.resolve('public/01 Baba Yetu.flac');
+    // const pathAudio = path.resolve('public/01 Baba Yetu.flac');
     walk('public')
       .then(resp =>
         Promise.all(
@@ -92,7 +93,14 @@ const audio = {
           ),
         ),
       )
-      .then(itemss => (item = itemss));
+      .then(itemss => {
+        item = _.chain(itemss)
+          .groupBy('album')
+          .toPairs()
+          .map(currentItem => _.zipObject(['album', 'tracks'], currentItem))
+          .value();
+        if (__DEV__) console.log(item);
+      });
     // mm.parseFile(pathAudio, { native: true })
     //  .then(metadata => {
     //    if (__DEV__) {

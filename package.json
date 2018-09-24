@@ -24,6 +24,7 @@
     "history": "^4.7.2",
     "isomorphic-style-loader": "^4.0.0",
     "jsonwebtoken": "^8.3.0",
+    "lodash": "^4.17.11",
     "music-metadata": "^3.0.0",
     "music-metadata-browser": "^0.3.2",
     "node-fetch": "^2.1.2",
