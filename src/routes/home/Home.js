@@ -43,10 +43,16 @@ class Home extends React.Component {
           {this.props.audio.map(item => (
             <div>
               <h3>{item.album}</h3>
-              <img
-                src={`data:image/jpeg;base64,${item.tracks[0].picture[0].data}`}
-                alt="cover"
-              />
+              {item.tracks[0].picture && (
+                <img
+                  src={`data:image/jpeg;base64,${
+                    item.tracks[0].picture[0].data
+                  }`}
+                  alt="cover"
+                  width="300"
+                  height="300"
+                />
+              )}
               {item.tracks.map(track => (
                 <div>
                   <p>

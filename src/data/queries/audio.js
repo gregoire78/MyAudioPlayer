@@ -35,7 +35,10 @@ function walk(dir) {
                 if (stats.isDirectory()) {
                   walk(filepath).then(resolve);
                 } else if (stats.isFile()) {
-                  if (path.extname(filepath) == '.flac') {
+                  if (
+                    path.extname(filepath) == '.flac' ||
+                    path.extname(filepath) == '.mp3'
+                  ) {
                     resolve(filepath);
                   } else {
                     resolve(null);
@@ -78,9 +81,11 @@ const audio = {
                       console.log(Math.random());
                     }
                     const itemso = metadata.common;
-                    itemso.picture[0].data = new Buffer(
-                      metadata.common.picture[0].data,
-                    ).toString('base64');
+                    if (metadata.common.picture) {
+                      itemso.picture[0].data = new Buffer(
+                        metadata.common.picture[0].data,
+                      ).toString('base64');
+                    }
                     resolve(itemso);
                   })
                   .catch(err => {
