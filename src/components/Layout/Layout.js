@@ -15,9 +15,15 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import normalizeCss from 'normalize.css';
 import s from './Layout.css';
 import Header from '../Header';
-import Feedback from '../Feedback';
-import Footer from '../Footer';
+// import Feedback from '../Feedback';
+// import Footer from '../Footer';
+import { Provider } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
 import AudioPlaylist from '../AudioPlaylist';
+import { reducer as jPlayers } from 'react-jplayer';
+import { reducer as jPlaylists } from 'react-jplaylist';
+
+const store = createStore(combineReducers({ jPlayers, jPlaylists }));
 
 class Layout extends React.Component {
   static propTypes = {
@@ -26,11 +32,13 @@ class Layout extends React.Component {
 
   render() {
     return (
-      <div>
-        <Header />
-        {this.props.children}
-        <AudioPlaylist />
-      </div>
+      <Provider store={store}>
+        <div>
+          <Header />
+          {this.props.children}
+          <AudioPlaylist />
+        </div>
+      </Provider>
     );
   }
 }

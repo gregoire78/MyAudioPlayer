@@ -11,6 +11,8 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { Container, Row, Col, Image, Collapse } from 'react-bootstrap';
 import s from './Home.css';
+import { connect } from 'react-redux';
+import { actions } from 'react-jplayer';
 
 class Home extends React.Component {
   static propTypes = {
@@ -39,17 +41,17 @@ class Home extends React.Component {
   render() {
 
     return (
-      <Container fluid={true} className={s.homeContainer}>
+      <Container fluid={true} className={s.homeContainer}><ToogleDuration /><ToogleMedia />
         <Row>
           {this.props.audio.map((item, i) => (
             <Col key={i}
-              onClick={() => this.setState({ [`key${i}`]: !this.state[`key${i}`] })}
-              aria-controls="example-collapse-text"
-              aria-expanded={this.state[`key${i}`]}
               className={s.albums}
             >
               {item.tracks[0].picture && (
                 <img
+                  onClick={() => this.setState({ [`key${i}`]: !this.state[`key${i}`] })}
+                  aria-controls="example-collapse-text"
+                  aria-expanded={this.state[`key${i}`]}
                   src={`data:image/jpeg;base64,${
                     item.tracks[0].picture[0].data
                     }`}
@@ -81,4 +83,26 @@ class Home extends React.Component {
   }
 }
 
-export default withStyles(s)(Home);
+const mapStateToProps = state => ({
+  showRemainingDuration: state.jPlayers.AudioPlaylist.showRemainingDuration,
+  media: state.jPlayers.AudioPlaylist.media,
+});
+const ComponentToogleDuration = ({ showRemainingDuration, dispatch }) =>
+  <div onClick={() => dispatch(actions.setOption('AudioPlaylist', 'showRemainingDuration', !showRemainingDuration))}>
+    Toggle Duration
+  </div>;
+const ToogleDuration = connect(mapStateToProps)(ComponentToogleDuration)
+
+const ComponentToogleMedia = ({ dispatch }) =>
+  <div onClick={() => dispatch(actions.setOption('AudioPlaylist', 'media', {
+    sources: { m4a: "/03 LUV U NEED U.flac" },
+    title: "lol",
+    artist: "lol",
+    poster: null,
+    free: false,
+    tracks: [],
+  }))}>
+    Toggle Change
+  </div>;
+const ToogleMedia = connect(mapStateToProps)(ComponentToogleMedia)
+export default withStyles(s)(Home)
