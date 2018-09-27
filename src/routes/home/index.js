@@ -29,7 +29,7 @@ async function action({ fetch }) {
     chunks: ['home'],
     component: (
       <Layout>
-        <Home news={data.news} audio={data.audio} />
+        <Home audio={data.audio} />
       </Layout>
     ),
   };

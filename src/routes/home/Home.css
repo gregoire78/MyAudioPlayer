@@ -8,42 +8,17 @@
  */
 
 @import '../../components/variables.css';
-
-.root {
-  padding-left: 20px;
-  padding-right: 20px;
+.homeContainer {
+  padding-bottom: 15px;
+  margin-bottom: 42px;
 }
-
-.container {
-  margin: 0;
-  padding: 0 0 40px;
-  max-width: var(--max-content-width);
+.albums {
+  padding-top: 15px;
 }
-
-.newsItem {
-  margin: 0 0 2rem;
-}
-
-.newsTitle {
-  font-size: 1.5rem;
-}
-
-.newsDesc {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-size: 1.125rem;
-  }
-
-  pre {
-    white-space: pre-wrap;
-    font-size: 0.875rem;
-  }
-
-  img {
-    max-width: 100%;
-  }
+.cover {
+  width: 300px;
+  height: 300px;
+  background-color: lightsteelblue;
+  text-align: center;
+  line-height: 300px;
 }

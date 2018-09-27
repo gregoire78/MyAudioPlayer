@@ -9,34 +9,28 @@
 
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import { Navbar, Nav } from 'react-bootstrap';
 import s from './Header.css';
 import Link from '../Link';
-import Navigation from '../Navigation';
+//  import Navigation from '../Navigation';
 //  import logoUrl from './logo-small.png';
 //  import logoUrl2x from './logo-small@2x.png';
 
 class Header extends React.Component {
   render() {
     return (
-      <div className={s.root}>
-        <div className={s.container}>
-          <Navigation />
-          <Link className={s.brand} to="/">
-            {/* <img
-              src={logoUrl}
-              srcSet={`${logoUrl2x} 2x`}
-              width="38"
-              height="38"
-              alt="React"
-            /> */}
-            <span className={s.brandTxt}>Greguardo</span>
-          </Link>
-          <div className={s.banner}>
-            <h1 className={s.bannerTitle} />
-            <p className={s.bannerDesc} />
-          </div>
-        </div>
-      </div>
+      <Navbar collapseOnSelect bg="dark" expand="lg" variant="dark">
+        <Navbar.Brand href="/" as={Link} to="/">Greguardo</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="/about" as={Link} to="/about">About</Nav.Link>
+            <Nav.Link href="/contact" as={Link} to="/contact">Contact</Nav.Link>
+            <Nav.Link href="/login" as={Link} to="/login">Login</Nav.Link>
+            <Nav.Link href="/register" as={Link} to="/register">Signin</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     );
   }
 }
