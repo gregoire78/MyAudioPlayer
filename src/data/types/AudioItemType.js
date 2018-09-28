@@ -3,7 +3,7 @@ import {
   GraphQLString as StringType,
   GraphQLList as ListType,
   GraphQLInt as IntType,
-  GraphQLNonNull as NonNull,
+  // GraphQLNonNull as NonNull,
 } from 'graphql';
 
 const disk = new ObjectType({
@@ -45,6 +45,7 @@ const AudioItemType = new ObjectType({
             artists: { type: new ListType(StringType) },
             artist: { type: StringType },
             title: { type: StringType },
+            filepath: { type: StringType },
           },
         }),
       ),

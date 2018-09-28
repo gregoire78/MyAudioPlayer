@@ -14,7 +14,8 @@ import Layout from '../../components/Layout';
 async function action({ fetch }) {
   const resp = await fetch('/graphql', {
     body: JSON.stringify({
-      query: '{audio{album,tracks{track{no},picture{data},artist,title}}}',
+      query:
+        '{audio{album,tracks{track{no},picture{data},artist,title,filepath}}}',
     }),
   });
   // const resp1 = await fetch('/api', { method: 'GET' });
@@ -25,7 +26,7 @@ async function action({ fetch }) {
   if (!data || !data.audio) throw new Error('Failed to load the audio feed.');
   // if (!data1 || !data1.common) throw new Error('Failed to load the metadata feed.');
   return {
-    title: 'React Starter Kit',
+    title: 'GregOdiau',
     chunks: ['home'],
     component: (
       <Layout>

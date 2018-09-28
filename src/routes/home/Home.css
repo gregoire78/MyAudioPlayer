@@ -8,17 +8,25 @@
  */
 
 @import '../../components/variables.css';
+
 .homeContainer {
   padding-bottom: 15px;
   margin-bottom: 42px;
 }
+
 .albums {
   padding-top: 15px;
 }
+
 .cover {
   width: 300px;
   height: 300px;
   background-color: lightsteelblue;
   text-align: center;
   line-height: 300px;
+}
+
+.trackLink {
+  cursor: pointer;
+  display: inline;
 }

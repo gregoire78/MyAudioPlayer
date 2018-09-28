@@ -47,6 +47,7 @@
     "source-map-support": "^0.5.6",
     "sqlite3": "^4.0.0",
     "universal-router": "^6.0.0",
+    "upath": "^1.1.0",
     "util": "^0.11.0",
     "whatwg-fetch": "^2.0.4"
   },

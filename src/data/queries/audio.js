@@ -2,6 +2,7 @@ import { GraphQLList as List } from 'graphql';
 import * as mm from 'music-metadata';
 import util from 'util';
 import path from 'path';
+import upath from 'upath';
 import fs from 'fs';
 import _ from 'lodash';
 import AudioItemType from '../types/AudioItemType';
@@ -63,7 +64,7 @@ const audio = {
   resolve() {
     // const pathAudio = path.resolve(__dirname, '../public/01 Baba Yetu.flac');
     // const pathAudio = path.resolve('public/01 Baba Yetu.flac');
-    walk('public')
+    walk('public/musics')
       .then(resp =>
         Promise.all(
           resp.map(
@@ -79,8 +80,14 @@ const audio = {
                         }),
                       );
                       console.log(Math.random());
+                      console.log(
+                        upath.normalize(audioFile).replace('public', ''),
+                      );
                     }
                     const itemso = metadata.common;
+                    itemso.filepath = upath
+                      .normalize(audioFile)
+                      .replace('public', '');
                     if (metadata.common.picture) {
                       itemso.picture[0].data = new Buffer(
                         metadata.common.picture[0].data,
