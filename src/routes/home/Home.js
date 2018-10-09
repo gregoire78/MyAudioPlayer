@@ -96,13 +96,14 @@ class Home extends React.Component {
         <Row>
           {this.props.audio.map((item, i) => (
             <Col key={i} className={s.albums}>
-              {(item.tracks[0].picture && (
+              {((item.tracks[0].picture || item.tracks[1].picture) && (
                 <img
                   onClick={() => this.handleClick(i)}
                   aria-controls="example-collapse-text"
                   aria-expanded={this.state[`key${i}`]}
                   src={`data:image/jpeg;base64,${
-                    item.tracks[0].picture[0].data
+                    ((item.tracks[0].picture) && item.tracks[0].picture[0].data) ||
+                    ((item.tracks[1].picture) && item.tracks[1].picture[0].data)
                   }`}
                   alt="cover"
                   width="300"
