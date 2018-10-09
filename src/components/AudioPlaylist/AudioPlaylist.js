@@ -60,7 +60,7 @@ class AudioPlaylist extends React.Component {
               <div className={sty.jpPoster}><Poster /></div>
               <div className={sty.jpTitle}><Title /></div>
             </div>
-            <div className="jp-controls jp-icon-controls">
+            <div className={"jp-controls jp-icon-controls " + sty.jpControls}>
               <Previous>
                 <i className="fa fa-step-backward" />
               </Previous>
