@@ -34,6 +34,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import d from 'react-jplaylist/src/less/skins/sleek.less';
 // Styles Play/Pause/Mute etc when icons (<i />) are used for them
 import f from 'react-jplaylist/src/less/controls/iconControls.less';
+import sty from './AudioPlaylist.css';
 
 const jPlayerOptions = {
   id: 'AudioPlaylist',
@@ -43,7 +44,7 @@ const jPlayerOptions = {
 };
 
 const jPlaylistOptions = {
-  hidePlaylist: false,
+  hidePlaylist: true,
   loop: 'off',
 };
 
@@ -55,6 +56,10 @@ class AudioPlaylist extends React.Component {
         <JPlayer className="jp-sleek">
           <Audio />
           <Gui>
+            <div className={"jp-title-container " + sty.jpTitleContainer}>
+              <div className={sty.jpPoster}><Poster /></div>
+              <div className={sty.jpTitle}><Title /></div>
+            </div>
             <div className="jp-controls jp-icon-controls">
               <Previous>
                 <i className="fa fa-step-backward" />
@@ -106,16 +111,9 @@ class AudioPlaylist extends React.Component {
                   <i className="fa fa-ellipsis-h" />
                 </TogglePlaylist>
               </div>
-              <FullScreen Screen>
-                <i className="fa fa-expand" />
-              </FullScreen>
               <Download>
                 <i className="fa fa-download" />
               </Download>
-              <div className="jp-title-container">
-                <Poster />
-                <Title />
-              </div>
             </div>
             <BrowserUnsupported serUnsupported />
           </Gui>
@@ -125,4 +123,4 @@ class AudioPlaylist extends React.Component {
   }
 }
 
-export default withStyles(d, f)(AudioPlaylist);
+export default withStyles(d, f, sty)(AudioPlaylist);

@@ -1,0 +1,20 @@
+.jpTitleContainer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #e5e5e5;
+    height: 75px;
+}
+.jpTitleContainer .jpTitle, .jpTitleContainer .jpPoster {display: inline-block;}
+.jpTitleContainer .jpTitle {
+    position: fixed;
+    line-height: calc(75px - 42px);
+    height: calc(75px - 42px);
+    width: 100%;
+    padding-left: 10px;
+    background-color: lightGrey
+}
+.jpTitleContainer .jpPoster{height: 75px;}
+.jpTitleContainer .jpPoster img {
+    height: 100%;
+}
