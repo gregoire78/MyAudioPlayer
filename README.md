@@ -1,6 +1,6 @@
 ## My Audio Player
 
-![screenshot](https://gist.githubusercontent.com/gregoire78/820a3433779004af57a2b798302d1464/raw/3103ddfccb35417b1f73f507ffec68f9d04a65a4/screen1.png)
+![screenshot](https://gist.githubusercontent.com/gregoire78/820a3433779004af57a2b798302d1464/raw/ec85f471fa8d36bab04fd8c4323a1110ea277529/screen1.png)
 
 ## React Starter Kit — "[isomorphic](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/)" web app boilerplate &nbsp; <a href="https://github.com/kriasoft/react-starter-kit/stargazers"><img src="https://img.shields.io/github/stars/kriasoft/react-starter-kit.svg?style=social&label=Star&maxAge=3600" height="20"></a> <a href="https://twitter.com/ReactStarter"><img src="https://img.shields.io/twitter/follow/ReactStarter.svg?style=social&label=Follow&maxAge=3600" height="20"></a>
 
